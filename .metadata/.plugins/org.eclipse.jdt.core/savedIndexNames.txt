@@ -1,4 +1,0 @@
-INDEX VERSION 1.134+C:\Users\root\source\repos\JavaPaint\.metadata\.plugins\org.eclipse.jdt.core
-239265685.index
-1865797976.index
-1996073747.index
