@@ -1,0 +1,56 @@
+package com.djson95.javapaint;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+
+import com.djson95.javapaint.model.Drawing;
+import com.djson95.javapaint.model.FileHandler;
+
+import se.kau.isgc08.lab4.view.DrawingPanel;
+
+public class Main {
+
+	public static void main(String[] args) {
+		var drawing = new Drawing();
+		var frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		var drawingPanel = new DrawingPanel(drawing.getRootElement());
+		drawingPanel.setBackground(Color.WHITE);
+		frame.add(drawingPanel);
+		frame.setSize(new Dimension(400, 300));
+		frame.setVisible(true);
+		
+		drawing.addCircle(10, 10, 150, 150, 3, Color.BLACK, Color.GREEN);
+		
+		frame.repaint();
+	}
+
+	public static void saveDrawing(Drawing drawing) {
+		System.out.println("Saving drawing...");
+		try {
+			FileHandler.getInstance().saveDrawing(drawing, new File("circle.dat"));
+		} catch (IOException e) {
+			System.out.println("Error saving drawing!");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadDrawing(Drawing drawing) {
+		System.out.println("Loading drawing...");
+		try {
+			FileHandler.getInstance().loadDrawing(new File("circle.dat"));
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found! Saving current drawing instead.");
+			e.printStackTrace();
+			saveDrawing(drawing);
+		} catch (ClassNotFoundException | IOException e) {
+			System.out.println("Error loading drawing!");
+			e.printStackTrace();
+		}
+	}
+}
